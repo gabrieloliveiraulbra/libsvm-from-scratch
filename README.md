@@ -22,29 +22,57 @@ Uma implementação puramente em **NumPy** de Máquinas de Vetores de Suporte (S
 
 ---
 
-## Visualizador Web Interativo ✨ NOVO
+## Visualizador Web Interativo ✨
 
-O projeto agora inclui um **Visualizador Web Full-Stack** para interagir e visualizar em tempo real as fronteiras de decisão da SVM. O frontend foi construído com React e Canvas HTML5 puro, e o backend usa FastAPI para processar os cálculos do SVM.
+O projeto inclui um **Visualizador Web Full-Stack** para interagir e visualizar em tempo real as fronteiras de decisão da SVM diretamente no navegador.
+
+```
+┌─────────────────────────┐        ┌──────────────────────────────┐
+│  Frontend (React + Vite) │──POST──▶  Backend (FastAPI + NumPy)  │
+│  http://localhost:5173   │◀──JSON──  http://localhost:8000       │
+└─────────────────────────┘        └──────────────────────────────┘
+        Canvas HTML5                     antigravity.svm.CSVC
+   Heatmap + Contornos                Grid 50×50 + Decision Function
+```
+
+### Pré-requisitos
+
+| Ferramenta | Versão mínima |
+|------------|---------------|
+| Python     | 3.10+         |
+| Node.js    | 18+           |
+| npm        | 9+            |
 
 ### Como iniciar o Visualizador
 
-**Passo 1: Iniciar o Backend (FastAPI)**
-Abra um terminal, vá até a pasta do backend e inicie o servidor:
+**Passo 1 — Backend (FastAPI)**  
+Abra um terminal na raiz do projeto:
 ```bash
 cd web-app/backend
-pip install fastapi uvicorn pydantic
+pip install fastapi uvicorn pydantic numpy
 python -m uvicorn main:app --port 8000
+# Servidor disponível em http://localhost:8000
+# Documentação automática em http://localhost:8000/docs
 ```
 
-**Passo 2: Iniciar o Frontend (React/Vite)**
-Abra outro terminal, vá até a pasta do frontend, instale as dependências e inicie o site:
+**Passo 2 — Frontend (React + Vite)**  
+Abra um **segundo terminal** na raiz do projeto:
 ```bash
 cd web-app/frontend
 npm install
 npm run dev
+# Acesse http://localhost:5173
 ```
 
-Acesse o link gerado (geralmente `http://localhost:5173`) no seu navegador e divirta-se criando pontos e vendo a Inteligência Artificial separar as classes!
+**Funcionamento**: Clique no gráfico para adicionar pontos verdes (Classe +1) ou vermelhos (Classe −1). A SVM é retreinada automaticamente a cada clique e a fronteira de decisão é desenhada em tempo real.
+
+### Resolução de Problemas
+
+| Sintoma | Solução |
+|--------|----------|
+| `Não foi possível conectar ao backend` | Verifique se o backend está rodando na porta 8000 |
+| `ModuleNotFoundError: antigravity` | Rode o backend a partir de `web-app/backend/`, não da raiz |
+| Página em branco no frontend | Execute `npm install` dentro de `web-app/frontend/` |
 
 ---
 

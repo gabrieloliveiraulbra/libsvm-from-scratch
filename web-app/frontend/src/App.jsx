@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import axios from 'axios';
 
-const API_URL = 'http://127.0.0.1:8000/api/train';
+const API_URL = '/api/train'; // Proxied by Vite → http://127.0.0.1:8000
 
 // ─── Canvas Render Engine ─────────────────────────────────────────────────────
 
